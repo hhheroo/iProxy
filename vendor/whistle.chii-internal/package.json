@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/liriliri/whistle.chii#readme",
   "dependencies": {
-    "chii": "xcodebuild/chii#patch-1"
+    "chii": "1.15.5"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",

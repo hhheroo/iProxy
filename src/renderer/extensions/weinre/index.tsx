@@ -51,6 +51,7 @@ export class Weinre extends Extension {
                     const container = document.querySelector('iframe')?.contentDocument?.querySelector('.description');
 
                     if (container) {
+                        container.classList.remove('hidden');
                         container.innerHTML = `<style>
                         ${
                             isDarkMode
@@ -66,7 +67,7 @@ export class Weinre extends Extension {
                         }
                         </style>
                         <div>
-                            通过代理访问带有 iproxy=true 参数的页面开始调试
+                            通过代理访问带有 <code>iproxy=true</code> 参数的页面开始调试
                         </div>`;
                     }
                 }
