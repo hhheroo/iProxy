@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Extension } from '../../extension';
 import { getWhistlePort } from '../../utils';
+import { setUiFont } from '../../set-ui-font';
 
 const whistleIframe = document.createElement('iframe');
 whistleIframe.style.display = 'none';
@@ -40,6 +41,7 @@ export class WhistlePanel extends Extension {
                     const customStyle = document.createElement('style');
                     customStyle.textContent = `#container { min-width: auto; }`;
                     iframeDocumentHead.appendChild(customStyle);
+                    setUiFont(document.querySelector('iframe')!.contentDocument!.body);
                 }
             }
 

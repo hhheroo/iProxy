@@ -3,6 +3,7 @@ import { CoreAPI } from '../../core-api';
 import { Extension } from '../../extension';
 import { useThemeMode } from '../../hooks/use-theme-mode';
 import { getWhistlePort } from '../../utils';
+import { setUiFont } from '../../set-ui-font';
 export class Weinre extends Extension {
     constructor() {
         super('weinre');
@@ -47,6 +48,7 @@ export class Weinre extends Extension {
                     
                     `;
                     iframeDocumentHead.appendChild(customStyle);
+                    setUiFont(document.querySelector('iframe')!.contentDocument!.body);
 
                     const container = document.querySelector('iframe')?.contentDocument?.querySelector('.description');
 

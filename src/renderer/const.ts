@@ -9,6 +9,9 @@ export const FILES_DIR = remote.getGlobal('__filesDir');
 export const ICON_TEMPLATE_PATH = path.join(FILES_DIR, 'iconTemplate.png');
 
 export const RULE_STORE_KEY = 'iproxy-rule';
+export const EDITOR_CONFIG = 'editor-config';
+export const UI_FONT = 'ui-font';
+export const EDITOR_THEMES = 'editor-themes';
 
 export const GITHUB_PROJECT_PAGE = 'https://github.com/xcodebuild/iproxy';
 export const NEW_ISSUE_PAGE = 'https://github.com/xcodebuild/iproxy/issues/new';

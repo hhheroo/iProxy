@@ -14,6 +14,7 @@ import { i18nResources } from './i18n';
 
 import 'electron-disable-file-drop';
 import logger from 'electron-log';
+import { setUiFont } from './set-ui-font';
 
 // @ts-ignore
 window.monaco = monaco;
@@ -76,6 +77,8 @@ window.onload = () => {
             clearInterval(timerID);
         }
     }, totalTime / totalSteps);
+
+    setUiFont(document.body);
 
     // load online.js
     const tag = document.createElement('script');

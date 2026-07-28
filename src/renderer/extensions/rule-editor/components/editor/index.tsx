@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext, useMemo } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { initRuleLanguage } from './rule-language/rule';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +8,9 @@ import { useThemeMode } from '../../../../hooks/use-theme-mode';
 import * as monaco from 'monaco-editor';
 import { useKeepAliveEffect } from 'react-keep-alive';
 import * as remote from '@electron/remote';
+import { CoreAPI } from '../../../../core-api';
+import { EDITOR_CONFIG } from '../../../../const';
+import { loadThemes } from './load-themes';
 
 interface Props {
     content: string;
@@ -18,6 +21,7 @@ interface Props {
 }
 
 initRuleLanguage(monaco);
+loadThemes(monaco);
 
 export const Editor = (props: Props) => {
     const { content, onChange, onSave, onMount, enabled } = props;
@@ -26,6 +30,9 @@ export const Editor = (props: Props) => {
     const { t } = useTranslation();
     const editorRef = useRef(null as MonacoEditor | null);
     const onSaveRef = useRef(onSave);
+    const editorConfig = useMemo(() => {
+        return CoreAPI.store.get(EDITOR_CONFIG) ?? {};
+    }, []);
     onSaveRef.current = onSave;
 
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -116,11 +123,12 @@ export const Editor = (props: Props) => {
                 <MonacoEditor
                     ref={editorRef}
                     language="rule"
-                    theme={isDarkMode ? 'vs-dark' : 'vs-light'}
+                    theme={editorConfig.theme ?? (isDarkMode ? 'vs-dark' : 'vs-light')}
                     value={content}
                     options={{
                         selectOnLineNumbers: true,
                         wordWrap: 'on',
+                        ...editorConfig,
                     }}
                     onChange={handleChange}
                     editorDidMount={(editor, monaco) => {
