@@ -18,7 +18,7 @@
     "dist-codesign": "node scripts/run.js dist-codesign",
     "pack": "node scripts/run.js pack",
     "lint": "node scripts/run.js lint",
-    "upgrade:whistle": "node scripts/run.js upgrade:whistle",
+    "upgrade:whistle": "echo 'use npm whistle'",
     "update:node_modules": "node scripts/run.js update:node_modules",
     "update:zip": "node scripts/run.js update:zip",
     "update:zip-fullnode": "node scripts/run.js update:zip-fullnode",

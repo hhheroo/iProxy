@@ -1,7 +1,0 @@
-{
-  "name": "whistle.pipe-ws",
-  "version": "1.1.1",
-  "whistleConfig": {
-    "pluginVars": true
-  }
-}

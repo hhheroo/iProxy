@@ -1,0 +1,18 @@
+--- /Users/way/Developer/xcodebuild/iProxy/vendor/whistle-start/res.js	2026-07-28 15:48:10
++++ /Users/way/Developer/xcodebuild/iProxy/vendor/whistle-start/res.patch.js	2026-07-28 15:48:01
+@@ -922,7 +922,15 @@
+                 setCookies(_resHeaders, data);
+                 extend(_resHeaders, data.headers);
+               }
++
++              const ruleRaw = req.rules && req.rules.rule && req.rules.rule.raw;
++              _resHeaders['__iproxy-host-ip__'] = req.hostIp || LOCALHOST;
++
++              const strwrap = (str) => str.replace(/[^\x00-\x7F]/g, '_');
+ 
++              _resHeaders['__iproxy-rules__'] = strwrap(JSON.stringify(ruleRaw) || 'none');
++              _resHeaders['__iproxy-real-url__'] = strwrap(req.realUrl || 'none');
++
+               if (resRules.resType) {
+                 var newType = util.getMatcherValue(resRules.resType).split(';');
+                 var type = newType[0];

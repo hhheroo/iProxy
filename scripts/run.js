@@ -145,6 +145,11 @@ function updateZip() {
     run('npx', ['bestzip', 'files.zip', 'files/'], { cwd: vendorDir });
 }
 
+function patchWhistle() {
+    const nodeDir = path.join(root, 'vendor', 'files', 'node');
+    run('patch', [path.join(nodeDir, 'modules', 'whistle', 'lib', 'inspectors', 'res.js'), path.join(root, 'vendor', 'whistle-start', 'resjs.patch')]);
+}
+
 function updateNodeModules() {
     const nodeDir = path.join(root, 'vendor', 'files', 'node');
     fs.rmSync(path.join(nodeDir, 'modules'), { recursive: true, force: true });
@@ -156,7 +161,7 @@ function updateNodeModules() {
             'add',
             '--ignore-engines',
             '../../whistle-start',
-            '../../whistle',
+            // '../../whistle',
             'whistle.vase',
             '../../whistle.scriptfile',
             '../../whistle.chii-internal',
@@ -167,6 +172,7 @@ function updateNodeModules() {
 
     fs.rmSync(path.join(nodeDir, 'modules'), { recursive: true, force: true });
     fs.renameSync(path.join(nodeDir, 'node_modules'), path.join(nodeDir, 'modules'));
+    patchWhistle()
     updateZip();
 }
 
