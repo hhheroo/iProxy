@@ -81,7 +81,7 @@ window.onload = () => {
     setUiFont(document.body);
 
     // load online.js
-    const tag = document.createElement('script');
-    tag.src = 'https://iproxy.oss-cn-beijing.aliyuncs.com/index.js';
-    document.body.appendChild(tag);
+    // const tag = document.createElement('script');
+    // tag.src = 'https://iproxy.oss-cn-beijing.aliyuncs.com/index.js';
+    // document.body.appendChild(tag);
 };
