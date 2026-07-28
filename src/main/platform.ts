@@ -15,7 +15,7 @@ export const SYSTEM_IS_LINUX = systemTypelinux === 'Linux';
 export function hideIconInDock() {
     if (SYSTEM_IS_MACOS) {
         app.hide();
-        app.dock.hide();
+        app.dock!.hide();
     }
 }
 
