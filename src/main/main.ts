@@ -616,7 +616,11 @@ app.on('ready', async () => {
     updateSplashProgress(100, 'Ready!');
 
     try {
-        await startHttpApiServer(mainWindow);
+        const info = await startHttpApiServer(mainWindow);
+        
+        if (!isDevelopment) {
+            mainWindow.loadURL(`http://127.0.0.1:${info.port}/index.html`);
+        }
     } catch (e) {
         // 端口被占用等问题不应该阻塞启动
         logger.error('failed to start http api server', e);

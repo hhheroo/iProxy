@@ -198,6 +198,7 @@
     "files": [
       "dist/*.js",
       "dist/*.html",
+      "dist/*.css",
       "dist/files.zip",
       "package.json",
       "main.js"
