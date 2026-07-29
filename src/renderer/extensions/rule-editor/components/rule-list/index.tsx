@@ -12,6 +12,7 @@ import { throttle } from 'lodash';
 import * as remote from '@electron/remote';
 import * as monaco from 'monaco-editor';
 import { CoreAPI } from '../../../../core-api';
+import { listenRulesChangedByExternal } from '../../rule-service';
 
 const { Menu, MenuItem } = remote;
 
@@ -198,6 +199,8 @@ export const RuleList = (props: Props) => {
             switchRule(items.findIndex((item) => item.uuid === currentSelectUUID));
         };
     }, [selected, ruleList]);
+
+    useEffect(() => listenRulesChangedByExternal((rules) => setRuleList(rules)), []);
 
     useEffect(() => {
         if (ruleList.length === 0) {

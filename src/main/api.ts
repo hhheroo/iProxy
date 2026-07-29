@@ -15,6 +15,7 @@ import { app, nativeTheme, BrowserWindow } from 'electron';
 import http from 'http';
 import * as process from 'process';
 import os from 'os';
+import { stopHttpApiServer } from './http-api-server';
 
 interface SwpanModuleProp {
     moduleId: string;
@@ -125,7 +126,7 @@ async function treeKillProcess(pid: any) {
     });
 }
 
-async function getIp() {
+export async function getIp() {
     const info = os.networkInterfaces();
     const address = Object.keys(info)
         .map((key) => {
@@ -211,5 +212,6 @@ export async function initIPC(mainWindow: BrowserWindow) {
 
     exitHook(async () => {
         await setSystemProxy(0);
+        await stopHttpApiServer();
     });
 }

@@ -12,6 +12,7 @@ import {
     globalShortcut,
 } from 'electron';
 import * as path from 'path';
+import logger from 'electron-log';
 import { splash } from './splash';
 import electronIsDev from 'electron-is-dev';
 
@@ -19,6 +20,7 @@ import { format as formatUrl } from 'url';
 import { initIPC } from './api';
 import { hideOrQuit } from './platform';
 import { installCertAndHelper } from './install';
+import { startHttpApiServer, stopHttpApiServer } from './http-api-server';
 
 // @ts-ignore
 import yauzl from 'yauzl';
@@ -554,6 +556,7 @@ app.on('before-quit', function () {
 
 app.on('will-quit', async () => {
     globalShortcut.unregisterAll();
+    await stopHttpApiServer();
     await setSystemProxy(0);
 });
 
@@ -611,4 +614,11 @@ app.on('ready', async () => {
     updateSplashProgress(0, 'Initializing IPC...');
     initIPC(mainWindow);
     updateSplashProgress(100, 'Ready!');
+
+    try {
+        await startHttpApiServer(mainWindow);
+    } catch (e) {
+        // 端口被占用等问题不应该阻塞启动
+        logger.error('failed to start http api server', e);
+    }
 });

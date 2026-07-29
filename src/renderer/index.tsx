@@ -15,6 +15,7 @@ import { i18nResources } from './i18n';
 import 'electron-disable-file-drop';
 import logger from 'electron-log';
 import { setUiFont } from './set-ui-font';
+import { initApiBridge } from './api-bridge';
 
 // @ts-ignore
 window.monaco = monaco;
@@ -51,6 +52,8 @@ i18n.use(initReactI18next) // passes i18n down to react-i18next
             escapeValue: false,
         },
     });
+
+initApiBridge();
 
 ReactDOM.render(
     // @ts-ignore

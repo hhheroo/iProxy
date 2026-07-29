@@ -12,6 +12,20 @@ module.exports = merge.merge(baseConfig, {
     entry: {
         main: './src/main/index.ts',
     },
+    // webpack 4 does not understand package.json conditional exports.
+    // Resolve the MCP SDK's internal CJS entry points explicitly.
+    resolve: {
+        alias: {
+            '@modelcontextprotocol/core/internal$': path.resolve(
+                __dirname,
+                '../node_modules/@modelcontextprotocol/core/dist/internal.cjs',
+            ),
+            '@modelcontextprotocol/server/_shims$': path.resolve(
+                __dirname,
+                '../node_modules/@modelcontextprotocol/server/dist/shimsNode.cjs',
+            ),
+        },
+    },
     module: {
         rules: [
             {
@@ -38,6 +52,9 @@ module.exports = merge.merge(baseConfig, {
             // 给 travis pr 构建的版本跳过更新等逻辑
             '__BUILD_FOR_TRAVIS_PR__': JSON.stringify(process.env.TRAVIS_PULL_REQUEST || ''),
             '__BUILD_FOR_TRAVIS_COMMIT__': JSON.stringify(process.env.TRAVIS_COMMIT || ''),
+        }),
+        new webpack.NormalModuleReplacementPlugin(/^node:/, (resource) => {
+            resource.request = resource.request.replace(/^node:/, '');
         }),
     ],
 });

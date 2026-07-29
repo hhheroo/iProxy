@@ -89,12 +89,22 @@ export class WhistleExtension extends Extension {
     }
     private mVisiableOnLan = false;
 
-    async toggleSystemProxy() {
-        const onlineStatus = this.coreAPI.store.get('onlineStatus');
+    /**
+     * @param value 不传表示切换，传布尔值表示幂等地设置成该状态
+     */
+    async toggleSystemProxy(value?: boolean) {
+        // onlineStatus in store is not really current status, just resverse it
+        const isEnabled = this.coreAPI.store.get('onlineStatus') === 'online';
+        const nextEnabled = typeof value === 'boolean' ? value : !isEnabled;
+
+        if (nextEnabled === isEnabled) {
+            return;
+        }
+
         const port = await getWhistlePort(this.coreAPI);
 
-        // onlineStatus in store is not really current status, just resverse it
-        toggleSystemProxy(onlineStatus === 'online' ? 'ready' : 'online', port, this.coreAPI);
+        // 这里传的是切换前的状态：'online' 表示接下来要开启，'ready' 表示接下来要关闭
+        toggleSystemProxy(nextEnabled ? 'online' : 'ready', port, this.coreAPI);
     }
 
     initGlobalKey() {
@@ -149,8 +159,8 @@ export class WhistleExtension extends Extension {
 
                     onlineStatus === 'online' && toggleSystemProxy(onlineStatus, port, this.coreAPI);
 
-                    this.coreAPI.eventEmmitter.on('iproxy-toggle-system-proxy', async () => {
-                        this.toggleSystemProxy();
+                    this.coreAPI.eventEmmitter.on('iproxy-toggle-system-proxy', async (value) => {
+                        this.toggleSystemProxy(value);
                     });
                 }
             };
