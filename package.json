@@ -1,6 +1,6 @@
 {
   "name": "iProxy",
-  "version": "1.2.2",
+  "version": "1.2.2-WAY",
   "license": "MIT",
   "main": "./dist/main.js",
   "scripts": {
