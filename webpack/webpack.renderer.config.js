@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const baseConfig = require('./webpack.base.config');
 const pkg = require('../package.json');
@@ -23,7 +23,6 @@ module.exports = merge.merge(baseConfig, {
     },
     module: {
         rules: [
-          
             {
                 test: /\.(le|c)ss$/,
                 exclude: /\.lazy\.(le|c)ss$/i,
@@ -54,9 +53,9 @@ module.exports = merge.merge(baseConfig, {
         ],
     },
     plugins: [
-        new ForkTsCheckerWebpackPlugin({
-            reportFiles: ['src/renderer/**/*'],
-        }),
+        // new ForkTsCheckerWebpackPlugin({
+        //     reportFiles: ['src/renderer/**/*'],
+        // }),
         new HtmlWebpackPlugin({
             title: pkg.title,
             template: path.resolve(__dirname, '../src/index.ejs'),

@@ -5,7 +5,7 @@ const path = require('path');
 module.exports = {
     mode: 'development',
     output: {
-      path: path.resolve(__dirname, '../app/dist'),
+        path: path.resolve(__dirname, '../app/dist'),
         filename: '[name].js',
     },
     node: {
@@ -18,13 +18,13 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                loader: 'ts-loader',
+                test: /\.[mc]?[jt]sx?$/,
+                loader: 'esbuild-loader',
                 options: {
-                    transpileOnly: true
+                    target: 'es2019',
                 },
             },
-        ]
+        ],
     },
     devtool: 'source-map',
     plugins: [],
