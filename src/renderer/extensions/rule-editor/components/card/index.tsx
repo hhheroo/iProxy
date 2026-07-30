@@ -12,40 +12,40 @@ interface Props {
     y: number;
 }
 
-const MOCK_PATH = 'github.com/xcodebuild/iproxy';
+const MOCK_PATH = 'www.example.com';
 
 const options = [
     {
         value: 'js-console',
         title: 'JS Console(with eruda)',
         icon: 'code',
-        content: `\${1:${MOCK_PATH}} htmlPrepend://\`
+        content: `\${1:${MOCK_PATH}} htmlPrepend://\`\`
 <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
 <script>eruda.init();</script>
-}\`
+}\`\`
 `,
     },
     {
         value: 'serve-content',
         title: 'Resposne static content(can be use for mock)',
         icon: 'edit',
-        content: `\${1:${MOCK_PATH}} \`\${2:resposne content
+        content: `\${1:${MOCK_PATH}} \`\`\${2:resposne content
 multiple line
-}\`
+}\`\`
 `,
     },
     {
         value: 'mock-json',
         title: 'Mock json',
         icon: 'paper-clip',
-        content: `\${1:${MOCK_PATH}} \`{
+        content: `\${1:${MOCK_PATH}} \`\`{
     "\${2:test}": "\${3:value}",
     "key": 5
 }
-\` resHeaders://\`{
+\`\` resHeaders://\`\`{
     "Content-type": "application/json"
 }
-\`
+\`\`
 `,
     },
     {
@@ -73,7 +73,7 @@ multiple line
         value: 'custom-nodejs-code',
         title: 'Custom nodejs code',
         icon: 'code',
-        content: `\${1:${MOCK_PATH}} scriptfile://\`
+        content: `\${1:${MOCK_PATH}} scriptfile://\`\`
 
 exports.handleRequest = async (ctx, next) => {
    // do sth
@@ -96,7 +96,7 @@ exports.handleRequest = async (ctx, next) => {
    // ctx.set('x-test', 'abc'); 修改响应头
    // ctx.body = String| Buffer | Stream | null; 修改响应内容
    ctx.body = 'test';
- };\`
+ };\`\`
 `,
     },
 ];

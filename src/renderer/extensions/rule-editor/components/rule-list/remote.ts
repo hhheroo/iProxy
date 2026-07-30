@@ -9,9 +9,12 @@ import { WHITELIST_DOMAINS } from '../../../../const';
 const MAGIC_RULE_DISABLE_HTTPS = '#IPROXY_MAGIC_DISABLE_HTTPS#';
 const MAGIC_RULE_DISABLE_HTTP2 = '#IPROXY_MAGIC_DISABLE_HTTP2#';
 
+// ``...`` inline blocks → temp files; do not treat markdown ``` fences as blocks
+const BACKTICK_BLOCK = /(?<![`])``([^]*?)(?<![`])``(?!`)/g;
+
 // some custom extend of whistle
 function extendRule(index: number, content: string) {
-    const extendContent = content.replace(/`([^]*?)`/g, (match, innerContent, offset) => {
+    const extendContent = content.replace(BACKTICK_BLOCK, (match, innerContent, offset) => {
         const dir = path.join(os.tmpdir(), '/iproxy');
         fs.mkdir(dir, () => {
             // pass
